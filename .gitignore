@@ -1,0 +1,41 @@
+# --- IDE ---
+.idea/
+*.iml
+*.ipr
+*.iws
+out/
+.vscode/
+
+# --- OS ---
+.DS_Store
+Thumbs.db
+
+# --- Build ---
+target/
+build/
+nbbuild/
+dist/
+nbdist/
+.nb-gradle/
+
+# --- Eclipse/STS/NetBeans ---
+.apt_generated/
+.classpath
+.factorypath
+.project
+.settings/
+.springBeans
+.sts4-cache
+/nbproject/private/
+
+# --- Maven Wrapper (커밋해야 함) ---
+# .mvn/wrapper/maven-wrapper.jar  <-- 무시하지 말 것 (주석만 두기)
+
+# --- Local/Secrets (예시) ---
+*.log
+logs/
+hs_err_pid*.log
+# Spring local override 파일을 쓰는 경우:
+src/main/resources/application-local.yml
+.env
+.env.*
