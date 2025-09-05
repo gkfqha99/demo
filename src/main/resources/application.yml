@@ -20,3 +20,7 @@ mybatis:
 logging:
   level:
     com.example.demo: debug
+
+jwt:
+  jwt.secret: ${JWT_SECRET}
+  access-token-validity-seconds: 3600
