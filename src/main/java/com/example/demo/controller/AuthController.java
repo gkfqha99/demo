@@ -3,6 +3,10 @@ package com.example.demo.controller;
 import com.example.demo.dto.AuthDtos.*;
 import com.example.demo.service.AuthService;
 import org.springframework.web.bind.annotation.*;
+/*비번 변경*/
+import com.example.demo.dto.AuthDtos.ChangePasswordReq;
+import jakarta.validation.Valid;
+import org.springframework.security.core.context.SecurityContextHolder;
 
 @RestController
 @RequestMapping("/api/auth")
@@ -32,9 +36,9 @@ public class AuthController {
 		return new MeRes(u.getId(), u.getEmail(), u.getNickname());
 	}
 
+	/*닉네임 변경*/
 	// AuthController.java
 	public record UpdateNickReq(String nickname) {}
-
 	@PutMapping("/me/nickname")
 	public MeRes updateNickname(@RequestBody UpdateNickReq req) {
 		var auth = org.springframework.security.core.context.SecurityContextHolder.getContext().getAuthentication();
@@ -45,5 +49,15 @@ public class AuthController {
 		return authService.updateNickname(userId, req.nickname());
 	}
 
+	/*비번 변경*/
+	@PutMapping("/me/password")
+	public void changePassword(@Valid @RequestBody ChangePasswordReq req) {
+		var auth = SecurityContextHolder.getContext().getAuthentication();
+		if (auth == null || auth.getPrincipal() == null) {
+			throw new IllegalArgumentException("인증이 필요합니다.");
+		}
+		Long userId = (Long) auth.getPrincipal();
+		authService.changePassword(userId, req);
+	}
 
 }

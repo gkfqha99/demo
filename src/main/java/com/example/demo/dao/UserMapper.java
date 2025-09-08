@@ -19,4 +19,9 @@ public interface UserMapper {
 	@Update("UPDATE users SET nickname = #{nickname} WHERE id = #{id}")
 	void updateNickname(@Param("id") Long id, @Param("nickname") String nickname);
 
+	// 비밀번호 변경
+	@Update("UPDATE users SET password = #{password} WHERE id = #{id}")
+	void updatePassword(@Param("id") Long id, @Param("password") String encodedPassword);
+
+
 }

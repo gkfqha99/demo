@@ -103,6 +103,12 @@
 		api 요청에는 헤더라는게 있는데 거기에 들은 토큰정보를 빼서 인증처리하는데 헤더파싱 근데 그게 서비스
 		단에 있으면 인증이필요한 모든 기능에 하나하나 다 인증해줘야하는데 얘하나 있으면 얘가 모든인증 처리함-->
 
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-validation</artifactId>
+		</dependency>
+		<!--컨트롤러의 요청 DTO에 어노테이션 기반 검증을 적용할 수 있게 해줌. 예: @NotBlank, @Email, @Size, @Pattern, @Min, @Max 등.
+		@Valid 또는 @Validated 와 함께 쓰면 스프링이 요청 들어오기 전에 자동으로 값 검사 → 조건 안 맞으면 400 Bad Request로 에러 응답.-->
 
 	</dependencies>
 

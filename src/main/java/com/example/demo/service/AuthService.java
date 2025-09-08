@@ -7,6 +7,10 @@ import com.example.demo.security.JwtUtil;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+/*비번 변경↓*/
+import static java.util.Objects.requireNonNull;
+import com.example.demo.dto.AuthDtos.ChangePasswordReq;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 @Service
 public class AuthService {
@@ -81,4 +85,13 @@ public class AuthService {
 		return new MeRes(u.getId(), u.getEmail(), u.getNickname());
 	}
 
+	/*비번 변경*/
+	public void changePassword(Long userId, ChangePasswordReq req) {
+		var u = requireNonNull(userMapper.findById(userId), "사용자를 찾을 수 없습니다.");
+		if (!encoder.matches(req.currentPassword(), u.getPassword())) {
+			throw new IllegalArgumentException("현재 비밀번호가 일치하지 않습니다.");
+		}
+		String hashed = encoder.encode(req.newPassword());
+		userMapper.updatePassword(userId, hashed);
+	}
 }
