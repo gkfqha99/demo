@@ -6,7 +6,7 @@ import com.example.demo.dto.AuthDtos.*;
 import com.example.demo.security.JwtUtil;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional; // ★ 트랜잭션 추가
+import org.springframework.transaction.annotation.Transactional;
 
 @Service
 public class AuthService {
@@ -38,8 +38,6 @@ public class AuthService {
 
 		userMapper.insert(u);
 
-		// 모든 작업이 문제 없이 끝나면 COMMIT
-		// 중간에 예외 터지면 자동 ROLLBACK
 		return new MeRes(u.getId(), u.getEmail(), u.getNickname());
 	}
 
@@ -58,9 +56,7 @@ public class AuthService {
 	}
 
 	/**
-	 * 내 정보 조회
-	 * - Authorization 헤더에서 토큰 꺼내 검증
-	 * - 토큰의 userId로 DB 조회
+	 * 내 정보 조회 (헤더 직접 파싱 방식)
 	 */
 	public MeRes me(String bearerToken) {
 		String token = bearerToken.replace("Bearer ", "");
@@ -68,5 +64,13 @@ public class AuthService {
 		Long id = Long.valueOf(claims.getSubject());
 		User u = userMapper.findById(id);
 		return new MeRes(u.getId(), u.getEmail(), u.getNickname());
+	}
+
+	/**
+	 * 사용자 ID로 직접 조회
+	 * - SecurityContext에서 userId 꺼낸 후 사용
+	 */
+	public User findById(Long id) {
+		return userMapper.findById(id);
 	}
 }

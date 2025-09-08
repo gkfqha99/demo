@@ -21,7 +21,15 @@ public class AuthController {
 	}
 
 	@GetMapping("/me")
-	public MeRes me(@RequestHeader("Authorization") String authHeader) {
-		return authService.me(authHeader);
+	public MeRes me() {
+		var auth = org.springframework.security.core.context.SecurityContextHolder
+				.getContext().getAuthentication();
+		if (auth == null || auth.getPrincipal() == null) {
+			throw new IllegalArgumentException("인증이 필요합니다.");
+		}
+		Long userId = (Long) auth.getPrincipal();
+		var u = authService.findById(userId); // 아래에 서비스 메서드 하나 추가
+		return new MeRes(u.getId(), u.getEmail(), u.getNickname());
 	}
+
 }

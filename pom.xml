@@ -96,6 +96,14 @@
 			<scope>runtime</scope>
 		</dependency>
 
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-security</artifactId>
+		</dependency> <!-- 스프링 시큐리티  이게 있어야 인증이 필요한 api요청때 얘하나로 다처리할수있음
+		api 요청에는 헤더라는게 있는데 거기에 들은 토큰정보를 빼서 인증처리하는데 헤더파싱 근데 그게 서비스
+		단에 있으면 인증이필요한 모든 기능에 하나하나 다 인증해줘야하는데 얘하나 있으면 얘가 모든인증 처리함-->
+
+
 	</dependencies>
 
 	<build>
