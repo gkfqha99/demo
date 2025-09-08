@@ -32,4 +32,18 @@ public class AuthController {
 		return new MeRes(u.getId(), u.getEmail(), u.getNickname());
 	}
 
+	// AuthController.java
+	public record UpdateNickReq(String nickname) {}
+
+	@PutMapping("/me/nickname")
+	public MeRes updateNickname(@RequestBody UpdateNickReq req) {
+		var auth = org.springframework.security.core.context.SecurityContextHolder.getContext().getAuthentication();
+		if (auth == null || auth.getPrincipal() == null) {
+			throw new IllegalArgumentException("인증이 필요합니다.");
+		}
+		Long userId = (Long) auth.getPrincipal();
+		return authService.updateNickname(userId, req.nickname());
+	}
+
+
 }

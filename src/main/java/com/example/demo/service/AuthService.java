@@ -73,4 +73,12 @@ public class AuthService {
 	public User findById(Long id) {
 		return userMapper.findById(id);
 	}
+
+	// 유저id랑 새닉네임 받아서 해당 유저 닉네임 수정.
+	public MeRes updateNickname(Long userId, String nickname) {
+		userMapper.updateNickname(userId, nickname);
+		var u = userMapper.findById(userId);
+		return new MeRes(u.getId(), u.getEmail(), u.getNickname());
+	}
+
 }
