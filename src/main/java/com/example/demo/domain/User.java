@@ -11,5 +11,6 @@ public class User {
 	private String email;
 	private String password; // BCrypt hash
 	private String nickname;
+	private String profileImage;
 }
 

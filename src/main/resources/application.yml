@@ -1,5 +1,5 @@
 server:
-  port: 8080  # 서버 포트
+  port: 8080
 
 spring:
   datasource:
@@ -13,14 +13,27 @@ spring:
       prefix: /WEB-INF/views/
       suffix: .jsp
 
-mybatis:
-  type-aliases-package: com.example.demo.domain
-  mapper-locations: classpath:mapper/**/*.xml
+  servlet:
+    multipart:
+      max-file-size: 5MB
+      max-request-size: 5MB
+
+# (선택) XML 매퍼를 안 쓰고 어노테이션 기반만 쓴다면 아래 mybatis 블록은 삭제해도 됩니다.
+# mybatis:
+#   type-aliases-package: com.example.demo.domain
+#   mapper-locations: classpath:mapper/**/*.xml
 
 logging:
   level:
     com.example.demo: debug
 
+# 🔴 기존엔 'jwt.jwt.secret' 형태로 잘못 들어가 있었음
+# JwtUtil에서 @Value("${jwt.secret}") 로 읽으므로 'jwt.secret'이어야 함
 jwt:
-  jwt.secret: ${JWT_SECRET}
+  secret: ${JWT_SECRET}
   access-token-validity-seconds: 3600
+
+# 🔴 기존엔 jwt 아래에 들어가 있어서 인식 안 됐음. app 은 루트 레벨이어야 함
+app:
+  upload:
+    dir: C:/Users/user/upload/profile

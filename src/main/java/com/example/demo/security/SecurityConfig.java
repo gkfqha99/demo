@@ -34,7 +34,8 @@ public class SecurityConfig {
 						.requestMatchers(
 								"/api/auth/login",
 								"/api/auth/register",
-								"/health", "/db-ping"
+								"/health", "/db-ping",
+								"/upload/**"
 						).permitAll()
 						.anyRequest().authenticated()/*requestMatchers 안에 든거 빼고는 다 인증필요란뜻*/
 				)
